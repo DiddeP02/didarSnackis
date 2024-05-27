@@ -12,8 +12,8 @@ using SnackisUppgift.Data;
 namespace SnackisUppgift.Migrations
 {
     [DbContext(typeof(SnackisUppgiftContext))]
-    [Migration("20230602120350_reports")]
-    partial class reports
+    [Migration("20240527124653_subject")]
+    partial class subject
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -258,6 +258,9 @@ namespace SnackisUppgift.Migrations
                     b.Property<int?>("PostId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ProfilePicture")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
@@ -327,6 +330,9 @@ namespace SnackisUppgift.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Likes")
+                        .HasColumnType("int");
+
                     b.Property<string>("ProfilePicture")
                         .HasColumnType("nvarchar(max)");
 
@@ -347,6 +353,54 @@ namespace SnackisUppgift.Migrations
                     b.HasIndex("SubjectId");
 
                     b.ToTable("Post");
+                });
+
+            modelBuilder.Entity("SnackisUppgift.Models.PostLike", b =>
+                {
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("PostId", "UserId");
+
+                    b.ToTable("PostLike");
+                });
+
+            modelBuilder.Entity("SnackisUppgift.Models.PostReport", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId")
+                        .IsUnique()
+                        .HasFilter("[PostId] IS NOT NULL");
+
+                    b.ToTable("PostReport");
                 });
 
             modelBuilder.Entity("SnackisUppgift.Models.Subject", b =>
@@ -467,6 +521,15 @@ namespace SnackisUppgift.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("SnackisUppgift.Models.PostReport", b =>
+                {
+                    b.HasOne("SnackisUppgift.Models.Post", "Post")
+                        .WithOne("PostReport")
+                        .HasForeignKey("SnackisUppgift.Models.PostReport", "PostId");
+
+                    b.Navigation("Post");
+                });
+
             modelBuilder.Entity("SnackisUppgift.Areas.Identity.Data.SnackisUppgiftUser", b =>
                 {
                     b.Navigation("MessagesReceived");
@@ -482,6 +545,8 @@ namespace SnackisUppgift.Migrations
             modelBuilder.Entity("SnackisUppgift.Models.Post", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("PostReport");
                 });
 #pragma warning restore 612, 618
         }

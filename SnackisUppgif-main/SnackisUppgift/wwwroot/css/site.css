@@ -20,6 +20,9 @@ html {
 body {
     margin-bottom: 60px;
 }
+a {
+    color: white !important;
+}
 
 .navbar-custom {
     background-color: red !important; /* Change this to your desired color */

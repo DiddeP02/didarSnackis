@@ -44,7 +44,7 @@ namespace SnackisUppgift.Pages
             {
                 SenderId = _userManager.GetUserId(User),
                 ReceiverId = originalMessage.SenderId,
-                Subject = "RE: " + originalMessage.Subject,
+                Subject = "REPLY: " + originalMessage.Subject,
                 Message = replyContent,
                 SentAt = DateTime.UtcNow
             };

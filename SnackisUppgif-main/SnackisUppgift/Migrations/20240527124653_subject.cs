@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SnackisUppgift.Migrations
 {
     /// <inheritdoc />
-    public partial class newestmigration : Migration
+    public partial class subject : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,6 +52,18 @@ namespace SnackisUppgift.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostLike",
+                columns: table => new
+                {
+                    PostId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostLike", x => new { x.PostId, x.UserId });
                 });
 
             migrationBuilder.CreateTable(
@@ -211,11 +223,13 @@ namespace SnackisUppgift.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SubjectId = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubjectId = table.Column<int>(type: "int", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Reports = table.Column<int>(type: "int", nullable: false),
+                    Likes = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -224,8 +238,7 @@ namespace SnackisUppgift.Migrations
                         name: "FK_Post_Subjects_SubjectId",
                         column: x => x.SubjectId,
                         principalTable: "Subjects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -234,11 +247,12 @@ namespace SnackisUppgift.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DatePosted = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PostId = table.Column<int>(type: "int", nullable: false),
-                    ParentCommentId = table.Column<int>(type: "int", nullable: false)
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DatePosted = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    PostId = table.Column<int>(type: "int", nullable: true),
+                    ParentCommentId = table.Column<int>(type: "int", nullable: true),
+                    ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -247,8 +261,7 @@ namespace SnackisUppgift.Migrations
                         name: "FK_Comments_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Comments_Comments_ParentCommentId",
                         column: x => x.ParentCommentId,
@@ -258,8 +271,29 @@ namespace SnackisUppgift.Migrations
                         name: "FK_Comments_Post_PostId",
                         column: x => x.PostId,
                         principalTable: "Post",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostReport",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PostId = table.Column<int>(type: "int", nullable: true),
+                    Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostReport", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PostReport_Post_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Post",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -330,6 +364,13 @@ namespace SnackisUppgift.Migrations
                 name: "IX_Post_SubjectId",
                 table: "Post",
                 column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostReport_PostId",
+                table: "PostReport",
+                column: "PostId",
+                unique: true,
+                filter: "[PostId] IS NOT NULL");
         }
 
         /// <inheritdoc />
@@ -357,13 +398,19 @@ namespace SnackisUppgift.Migrations
                 name: "DirectMessages");
 
             migrationBuilder.DropTable(
+                name: "PostLike");
+
+            migrationBuilder.DropTable(
+                name: "PostReport");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Post");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Post");
 
             migrationBuilder.DropTable(
                 name: "Subjects");

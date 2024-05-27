@@ -1,0 +1,70 @@
+﻿@page
+@model SnackisUppgift.Pages.Admin.PostAdmin.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Post</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Post.Id" />
+@*            <div class="form-group">
+                <label asp-for="Post.Likes" class="control-label"></label>
+                <input asp-for="Post.Likes" class="form-control" />
+                <span asp-validation-for="Post.Likes" class="text-danger"></span>
+            </div>*@
+@*            <div class="form-group">
+                <label asp-for="Post.Comments" class="control-label"></label>
+                <input asp-for="Post.Comments" class="form-control" />
+                <span asp-validation-for="Post.Comments" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Post.Image" class="control-label"></label>
+                <input asp-for="Post.Image" class="form-control" />
+                <span asp-validation-for="Post.Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Post.Title" class="control-label"></label>
+                <input asp-for="Post.Title" class="form-control" />
+                <span asp-validation-for="Post.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Post.Description" class="control-label"></label>
+                <input asp-for="Post.Description" class="form-control" />
+                <span asp-validation-for="Post.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Post.SubjectId" class="control-label"></label>
+                <select asp-for="Post.SubjectId" class="form-control" asp-items="ViewBag.SubjectId"></select>
+                <span asp-validation-for="Post.SubjectId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Post.Date" class="control-label"></label>
+                <input asp-for="Post.Date" class="form-control" />
+                <span asp-validation-for="Post.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Post.UserName" class="control-label"></label>
+                <input asp-for="Post.UserName" class="form-control" />
+                <span asp-validation-for="Post.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

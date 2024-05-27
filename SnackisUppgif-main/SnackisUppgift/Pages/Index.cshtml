@@ -1,0 +1,331 @@
+﻿@page
+@model IndexModel
+@{
+	ViewData["Title"] = "Home page";
+}
+
+<style>
+	body {
+		background-image: url('/Backgroundimages/wp2668083.png');
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+
+	.blurry-background::before {
+		content: "";
+		display: block;
+		position: fixed;
+		z-index: -1;
+		width: 100%;
+		height: 100%;
+		background: inherit;
+		transform: scale(1.1);
+	}
+
+	.list-group-item {
+		background-color: rgba(255, 255, 255, 0.1);
+		box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	}
+
+	.card {
+		background-color: rgba(255, 255, 255, 0.1);
+		box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	}
+
+	.card-img-container {
+		height: 70vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+		.card-img-container img {
+			object-fit: cover;
+			width: 100%;
+			height: 100%;
+		}
+
+	.comment {
+		margin-bottom: 10px;
+	}
+
+	.comment-content {
+		margin-left: 10px;
+	}
+
+	.comment-details {
+		display: flex;
+		align-items: center;
+		font-size: 14px;
+		color: #888;
+	}
+
+	.username {
+		margin-right: 5px;
+	}
+
+	.profile-picture {
+		width: 40px;
+		height: 40px;
+	}
+
+	.date {
+		margin-left: 5px;
+	}
+
+	.delete-button {
+		margin-left: auto;
+	}
+
+	/* Custom styles */
+	.subjects-sidebar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 200px;
+		height: 100%;
+		background-color: rgba(255, 255, 255, 0.1);
+		box-shadow: 0 0 10px rgba(0,0,0,0.5);
+		padding: 20px;
+		overflow-y: auto;
+	}
+
+	.posts-content {
+		margin-left: 220px; /* Adjust the margin to leave space for the sidebar */
+	}
+
+</style>
+
+<body class="blurry-background">
+	<div class="text-center">
+		@if (Model.MyUser != null)
+		{
+			<h1 class="display-4">Välkommen @Model.MyUser.FirstName @Model.MyUser.LastName</h1>
+			<div>
+				@if (!string.IsNullOrEmpty(Model.MyUser.ProfilePicture))
+				{
+					<img src="@Model.MyUser.ProfilePicture" alt="Profile picture" style="width:40px;height:40px;border-radius:50%;">
+				}
+				else
+				{
+					<img src="/Images/default_profile_picture.jpg" alt="Default profile picture" style="width:40px;height:40px;border-radius:50%;">
+				}
+			</div>
+		}
+	</div>
+
+	@if (User.Identity.IsAuthenticated)
+	{
+		<div class="row justify-content-center">
+			<div class="col-md-auto">
+				<div class="accordion" id="PostAccordion">
+					<div class="card">
+						<div class="card-header" id="Posta">
+							<button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#PostCollapse" aria-expanded="true" aria-controls="PostCollapse">
+								Post
+							</button>
+						</div>
+						<div id="PostCollapse" class="collapse" aria-labelledby="Posta" data-bs-parent="#PostAccordion">
+							<div class="card-body">
+								<form method="post" enctype="multipart/form-data">
+									<div class="form-group">
+										<label asp-for="@Model.Post.Title" class="form-label"></label>
+										<input asp-for="Post.Title" class="form-control">
+										<span asp-validation-for="Post.Title" class="text-danger"></span>
+									</div>
+
+									<div class="form-group">
+										<label asp-for="Post.Description" class="form-label"></label>
+										<textarea asp-for="Post.Description" class="form-control" cols="40" rows="5"></textarea>
+										<span asp-validation-for="Post.Description" class="text-danger"></span>
+									</div>
+
+									<div class="form-group">
+										<label asp-for="Post.SubjectId" class="form-label"></label>
+										<select asp-for="Post.SubjectId" class="form-control" asp-items="@(new SelectList(Model.Subjects, "Id", "Category"))">
+											<option value="">Välj ämne</option>
+										</select>
+										<span asp-validation-for="Post.SubjectId" class="text-danger"></span>
+									</div>
+
+
+									<div class="form-group form-check">
+										<input asp-for="IsAnonymous" type="checkbox" class="form-check-input" id="anonymousCheck">
+										<label asp-for="IsAnonymous" class="form-check-label">Posta som anonym</label>
+									</div>
+
+									<div class="form-group">
+										<label asp-for="UploadedImage" class="form-label"></label>
+										<input type="file" class="form-control" name="UploadedImage">
+									</div>
+
+									<input type="submit" class="btn btn-success" value="Spara Inlägg">
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+
+	else
+	{
+		<div class="alert alert-danger text-center" style="max-width: 200px; margin: 0 auto;">
+			Du är inte inloggad
+		</div>
+	}
+
+	<div class="row">
+		<div class="col-md-3">
+			<div class="subjects-sidebar" style="top: 59px;">
+				<h6>Subjects:</h6>
+				<div class="list-group">
+					@foreach (var subject in Model.Subjects)
+					{
+						<a asp-route-subjectId="@subject.Id" class="list-group-item list-group-item-action">
+							@subject.Category
+						</a>
+					}
+				</div>
+			</div>
+		</div>
+		<div class="col-md-9 posts-content">
+			<!-- Your post content here -->
+		</div>
+	</div>
+
+	<div class="d-flex justify-content-center flex-wrap">
+		@if (Model.Posts != null)
+		{
+			@foreach (var post in Model.Posts)
+			{
+				<div class="card m-2" style="width: 60vw; max-width: 100%;">
+					<div class="card-body">
+						<div class="card-header-info d-flex justify-content-between align-items-center">
+							<div class="d-flex align-items-center">
+								@if (Model.IsAnonymous != true)
+								{
+									<img src="@(!string.IsNullOrEmpty(post.ProfilePicture) ? post.ProfilePicture : "/Images/default_profile_picture.jpg")" alt="Profile picture" style="width:40px;height:40px;border-radius:50%;">
+								}
+								<p class="mb-0 ml-2">@(!Model.IsAnonymous && !string.IsNullOrEmpty(post.UserName) ? post.UserName : "Anonym")</p>
+							</div>
+							<p class="mb-0">@post.Date</p>
+						</div>
+						<div class="card-img-container">
+							@if (!string.IsNullOrEmpty(post.Image))
+							{
+								<img class="card-img-top" src="~/img/@post.Image">
+							}
+							else
+							{
+								<p>No image available for this post</p>
+							}
+						</div>
+						<h5 class="card-title">@post.Title</h5>
+						<p class="card-text">@post.Description</p>
+
+						@if (User.Identity.Name != null && (User.Identity.Name == post.UserName || User.IsInRole("Admin")) || User.IsInRole("Owner"))
+						{
+							<form method="post" asp-page-handler="Delete" onsubmit="return confirm('Are you sure you want to delete this post?');">
+								<input type="hidden" name="deleteId" value="@post.Id" />
+								<button type="submit" class="btn btn-primary">Delete</button>
+							</form>
+						}
+
+						@if (User.Identity.IsAuthenticated)
+						{
+							<form method="post">
+								<input type="hidden" name="postId" value="@post.Id" />
+								<button type="submit" class="btn btn-primary" asp-page-handler="ToggleLike">Like/Unlike Post</button>
+							</form>
+							<p>Likes: @post.Likes</p>
+							<div class="accordion" id="CommentAccordion">
+								<div class="card">
+									<div class="card-header" id="Commenta">
+										<button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#CommentCollapse" aria-expanded="true" aria-controls="CommentCollapse">
+											Kommentera
+										</button>
+									</div>
+									<div id="CommentCollapse" class="collapse" aria-labelledby="Posta" data-bs-parent="#CommentAccordion">
+										<form method="post" asp-page-handler="PostComment">
+											<input type="hidden" name="PostId" value="@post.Id" />
+											<input type="text" name="Text" placeholder="Your comment" required />
+											<button type="submit">Post Comment</button>
+										</form>
+
+
+										@if (post.Comments != null)
+										{
+											<h6>Comments:</h6>
+											@foreach (var comment in post.Comments)
+											{
+												<div class="comment d-flex align-items-start">
+													<div class="profile-picture">
+														<img src="@(!string.IsNullOrEmpty(comment.ProfilePicture) ? comment.ProfilePicture : "/Images/default_profile_picture.jpg")" alt="Profile picture" style="width:40px;height:40px;border-radius:50%;">
+													</div>
+													<div class="comment-content">
+														<p>@comment.Text</p>
+														<div class="comment-details">
+															<span class="username">@comment.User.UserName</span>
+															<span class="date">@comment.DatePosted</span>
+														</div>
+													</div>
+													<div class="delete-button">
+														@if (User.Identity.Name != null && (User.Identity.Name == comment.User.UserName || User.IsInRole("Admin") || User.IsInRole("Owner")))
+														{
+															<form method="post" asp-page-handler="DeleteComment" onsubmit="return confirm('Are you sure you want to delete this comment?');">
+																<input type="hidden" name="commentId" value="@comment.Id" />
+																<button type="submit" class="btn btn-danger">Delete</button>
+															</form>
+														}
+													</div>
+												</div>
+											}
+										}
+									</div>
+								</div>
+								<div class="accordion" id="PostAccordion">
+									<div class="card">
+										<div class="card-header" id="Posta">
+											<button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#PostCollapse" aria-expanded="true" aria-controls="PostCollapse">
+												Report
+											</button>
+										</div>
+										<div id="PostCollapse" class="collapse" aria-labelledby="Posta" data-bs-parent="#PostAccordion">
+											<div class="card-body">
+												<form method="post" asp-page-handler="ReportPost">
+													<input type="hidden" name="postId" value="@post.Id" />
+													<div class="form-group">
+														<label for="category">Category:</label>
+														<select name="category" id="category" class="form-control">
+															<option value="Spam">Spam</option>
+															<option value="Inappropriate Content">Inappropriate Content</option>
+															<option value="Harassment">Harassment</option>
+															<option value="Other">Other</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="reason">Reason:</label>
+														<textarea name="reason" id="reason" class="form-control"></textarea>
+													</div>
+													<button type="submit" class="btn btn-primary">Report Post</button>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						}
+						else
+						{
+							<p>You must be logged in to react.</p>
+						}
+					</div>
+				</div>
+			}
+		}
+	</div>
+</body>

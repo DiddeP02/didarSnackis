@@ -56,7 +56,7 @@ namespace SnackisUppgift.Pages.Roles
 			}
 
 			// Add the specified user to the "Admin" role
-			var user = await _userManager.FindByEmailAsync("bilals@hotmail.com");
+			var user = await _userManager.FindByEmailAsync("didar.pirdaoud@hotmail.com");
 			if (user != null && !(await _userManager.IsInRoleAsync(user, "Owner")))
 			{
 				await _userManager.AddToRoleAsync(user, "Owner");	

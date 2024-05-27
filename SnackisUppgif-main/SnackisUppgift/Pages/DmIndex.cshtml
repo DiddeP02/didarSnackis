@@ -21,50 +21,57 @@
     }
 </style>
 <body class="blurry-background">
-<div class="container">
-    <h1 class="mt-5 mb-4">Your Direct Messages</h1>
+    <div class="container">
+        <h1 class="mt-5 mb-4">Your Direct Messages</h1>
 
-    @foreach (var dm in Model.DirectMessages)
-    {
-        <div class="card mb-3">
-            <div class="card-header">
-                From: @dm.Sender.UserName <!-- Replace with sender's username -->
-                To: @dm.Receiver.UserName <!-- Replace with receiver's username -->
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">@dm.Subject</h5>
-                <p class="card-text">@dm.Message</p>
-                <p class="card-text"><small class="text-muted">Sent: @dm.SentAt</small></p>
-                <a asp-page="./Reply" asp-route-id="@dm.Id" class="btn btn-primary">Reply</a>
-            </div>
-        </div>
-    }
-</div>
+        @if (Model.DirectMessages != null)
+        {
+            @foreach (var dm in Model.DirectMessages)
+            {
+                <div class="card mb-3">
+                    <div class="card-header">
+                        From: @(dm.Sender?.UserName ?? "Unknown Sender") <!-- Replace with sender's username -->
+                        To: @(dm.Receiver?.UserName ?? "Unknown Receiver") <!-- Replace with receiver's username -->
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">@dm.Subject</h5>
+                        <p class="card-text">@dm.Message</p>
+                        <p class="card-text"><small class="text-muted">Sent: @dm.SentAt</small></p>
+                        <a asp-page="./Reply" asp-route-id="@dm.Id" class="btn btn-primary">Reply</a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No direct messages available.</p>
+        }
+    </div>
 
-<div class="container mt-5">
-    <div class="accordion" id="sendDmAccordion">
-        <div class="card">
-            <div class="card-header" id="sendDmHeading">
-                <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#sendDmCollapse" aria-expanded="true" aria-controls="sendDmCollapse">
-                    Send Direct Message
-                </button>
-            </div>
-            <div id="sendDmCollapse" class="collapse" aria-labelledby="sendDmHeading" data-bs-parent="#sendDmAccordion">
-                <div class="card-body">
-                    <form method="post" asp-page-handler="SendDM">
-                        <div class="form-group">
-                            <label for="receiverEmail">Email of the person you want to message</label>
-                            <input type="email" id="receiverEmail" name="receiverEmail" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="dmContent">Your Message</label>
-                            <textarea id="dmContent" name="dmContent" class="form-control"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Direct Message</button>
-                    </form>
+    <div class="container mt-5">
+        <div class="accordion" id="sendDmAccordion">
+            <div class="card">
+                <div class="card-header" id="sendDmHeading">
+                    <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#sendDmCollapse" aria-expanded="true" aria-controls="sendDmCollapse">
+                        Send Direct Message
+                    </button>
+                </div>
+                <div id="sendDmCollapse" class="collapse" aria-labelledby="sendDmHeading" data-bs-parent="#sendDmAccordion">
+                    <div class="card-body">
+                        <form method="post" asp-page-handler="SendDM">
+                            <div class="form-group">
+                                <label for="receiverEmail">Email of the person you want to message</label>
+                                <input type="email" id="receiverEmail" name="receiverEmail" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="dmContent">Your Message</label>
+                                <textarea id="dmContent" name="dmContent" class="form-control"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Direct Message</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>

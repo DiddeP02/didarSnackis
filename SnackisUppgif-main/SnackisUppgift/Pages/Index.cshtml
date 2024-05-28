@@ -102,7 +102,7 @@
 	<div class="text-center">
 		@if (Model.MyUser != null)
 		{
-			<h1 class="display-4">Välkommen @Model.MyUser.FirstName @Model.MyUser.LastName</h1>
+			<h1 class="display-4"> @Model.MyUser.FirstName @Model.MyUser.LastName</h1>
 			<div>
 				@if (!string.IsNullOrEmpty(Model.MyUser.ProfilePicture))
 				{
@@ -145,7 +145,7 @@
 									<div class="form-group">
 										<label asp-for="Post.SubjectId" class="form-label"></label>
 										<select asp-for="Post.SubjectId" class="form-control" asp-items="@(new SelectList(Model.Subjects, "Id", "Category"))">
-											<option value="">Välj ämne</option>
+											<option value="">Select Topic</option>
 										</select>
 										<span asp-validation-for="Post.SubjectId" class="text-danger"></span>
 									</div>
@@ -153,7 +153,7 @@
 
 									<div class="form-group form-check">
 										<input asp-for="IsAnonymous" type="checkbox" class="form-check-input" id="anonymousCheck">
-										<label asp-for="IsAnonymous" class="form-check-label">Posta som anonym</label>
+										<label asp-for="IsAnonymous" class="form-check-label">Post as anonymous</label>
 									</div>
 
 									<div class="form-group">
@@ -161,7 +161,7 @@
 										<input type="file" class="form-control" name="UploadedImage">
 									</div>
 
-									<input type="submit" class="btn btn-success" value="Spara Inlägg">
+									<input type="submit" class="btn btn-success" value="Save Post">
 								</form>
 							</div>
 						</div>

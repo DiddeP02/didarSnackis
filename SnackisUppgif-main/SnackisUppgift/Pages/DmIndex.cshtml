@@ -22,7 +22,7 @@
 </style>
 <body class="blurry-background">
     <div class="container">
-        <h1 class="mt-5 mb-4">Your Direct Messages</h1>
+        <h1 class="mt-5 mb-4">Your Messages</h1>
 
         @if (Model.DirectMessages != null)
         {
@@ -44,7 +44,7 @@
         }
         else
         {
-            <p>No direct messages available.</p>
+            <p>No messages available.</p>
         }
     </div>
 
@@ -53,7 +53,7 @@
             <div class="card">
                 <div class="card-header" id="sendDmHeading">
                     <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#sendDmCollapse" aria-expanded="true" aria-controls="sendDmCollapse">
-                        Send Direct Message
+                        Send Message
                     </button>
                 </div>
                 <div id="sendDmCollapse" class="collapse" aria-labelledby="sendDmHeading" data-bs-parent="#sendDmAccordion">
@@ -67,7 +67,7 @@
                                 <label for="dmContent">Your Message</label>
                                 <textarea id="dmContent" name="dmContent" class="form-control"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Send Direct Message</button>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
                         </form>
                     </div>
                 </div>

@@ -21,7 +21,10 @@ body {
     margin-bottom: 60px;
 }
 a {
-    color: white !important;
+    color: black !important;
+}
+.nav-link {
+    color: black !important;
 }
 
 .navbar-custom {
@@ -30,9 +33,25 @@ a {
 }
 
     .navbar-custom .nav-link {
-        color: #ffffff !important; /* Ensures text is readable on the dark background */
+        color: black !important; /* Ensures text is readable on the dark background */
     }
 
         .navbar-custom .nav-link:hover {
             color: #cccccc !important; /* Changes color on hover */
         }
+
+.add-role {
+    background-color: black; /* Change to your desired color */
+    border-color: black; /* Change to your desired color */
+    color: red; /* Ensures the text is visible against the background color */
+}
+
+.removal-button {
+    background-color: black;
+    border-color: black;
+    color: red;
+}
+
+.user-name {
+    color: red;
+}

@@ -2,6 +2,18 @@
 @model SnackisUppgift.Pages.Roles.IndexModel
 @{
 }
+<head>
+	<style>
+		.body {
+			background-image: url('/Backgroundimages/best-background-for-website-14.png');
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+	</style>
+</head>
+
+
 <h1>Admin</h1>
 
 <div>
@@ -15,7 +27,7 @@
 	<form method="post">
 		<label for="RemoveRoleName">Remove Role</label>
 		<input name="RemoveRoleName" id="RemoveRoleName" />
-		<input type="submit" value="Remove Role" />
+		<input type="submit" value="Remove Role" class="btn btn-primary removal-button" />
 	</form>
 </div>
 @if (ViewData.ModelState["RoleRemoval"]?.Errors.Count > 0)
@@ -80,7 +92,7 @@
 	<form method="post">
 		<label for="RoleName">Add New Role</label>
 		<input name="RoleName" id="RoleName" />
-		<input type="submit" value="Add new role" />
+		<input type="submit" value="Add new role" class="btn btn-primary add-role" />
 
 	</form>
 </div>

@@ -6,21 +6,26 @@
 
 <style>
 	body {
-		background-image: url('/Backgroundimages/wp2668083.png');
+		background-image: url('/Backgroundimages/best-background-for-website-14.png');
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: center;
 	}
 
-	.blurry-background::before {
-		content: "";
-		display: block;
-		position: fixed;
-		z-index: -1;
-		width: 100%;
-		height: 100%;
-		background: inherit;
-		transform: scale(1.1);
+	.btn-success {
+		background-color: red;
+		boder-color: red;
+		color: black;
+	}
+
+	.btn-link {
+		color: red;
+	}
+
+	.btn-primary {
+		background-color: red;
+		border-color: red;
+		color: black;
 	}
 
 	.list-group-item {
@@ -96,13 +101,91 @@
 		margin-left: 220px; /* Adjust the margin to leave space for the sidebar */
 	}
 
+	.topics-color {
+		color: red;
+	}
+
+	.user-name {
+		color: red;
+	}
+
+	.mb-0 {
+		color: red;
+	}
+
+	.list-group-item {
+		background-color: red;
+		border-color: red;
+		color: black;
+	}
+
+	.card-title {
+		color: red;
+	}
+
+	.card-text {
+		color: red;
+	}
+
+	.likes-count {
+		color: red;
+	}
+
+	.choose-section
+	{
+		color: red;
+	}
+
+	.reason-color {
+		color: red;
+	}
+
+	.spam-color {
+		color: red;
+	}
+
+	.offensive-content {
+		color: red;
+	}
+
+	.abuse-color {
+		color: red;
+	}
+
+	.other-color {
+		color: red;
+	}
+
+	.comments-color {
+		color: red;
+	}
+
+	.post-comment {
+		background-color: red;
+		border-color: red;
+		color: black;
+	}
+
+	.form-label {
+		color: red;
+	}
+
+	.form-check-label {
+		color: red;
+	}
+
+	.form-control {
+		background-color: red;
+		border-color: red;
+		color: black;
+	}
 </style>
 
 <body class="blurry-background">
 	<div class="text-center">
 		@if (Model.MyUser != null)
 		{
-			<h1 class="display-4"> @Model.MyUser.FirstName @Model.MyUser.LastName</h1>
+			<h1 class="display-4 user-name"> @Model.MyUser.FirstName @Model.MyUser.LastName</h1>
 			<div>
 				@if (!string.IsNullOrEmpty(Model.MyUser.ProfilePicture))
 				{
@@ -143,7 +226,7 @@
 									</div>
 
 									<div class="form-group">
-										<label asp-for="Post.SubjectId" class="form-label"></label>
+										<label asp-for="Post.SubjectId" class="form-label">Topic</label>
 										<select asp-for="Post.SubjectId" class="form-control" asp-items="@(new SelectList(Model.Subjects, "Id", "Category"))">
 											<option value="">Select Topic</option>
 										</select>
@@ -157,7 +240,8 @@
 									</div>
 
 									<div class="form-group">
-										<label asp-for="UploadedImage" class="form-label"></label>
+										
+										<label asp-for="UploadedImage" class="form-label">Uploaded image</label>
 										<input type="file" class="form-control" name="UploadedImage">
 									</div>
 
@@ -174,13 +258,13 @@
 	else
 	{
 		<div class="alert alert-danger text-center" style="max-width: 200px; margin: 0 auto;">
-			Du är inte inloggad
+			Your not logged in!
 		</div>
 	}
 
 	<div class="row">
 		<div class="col-md-3">
-			<div class="subjects-sidebar" style="top: 59px;">
+			<div class="subjects-sidebar topics-color" style="top: 59px;">
 				<h6>Topics:</h6>
 				<div class="list-group">
 					@foreach (var subject in Model.Subjects)
@@ -210,7 +294,7 @@
 								{
 									<img src="@(!string.IsNullOrEmpty(post.ProfilePicture) ? post.ProfilePicture : "/Images/default_profile_picture.jpg")" alt="Profile picture" style="width:40px;height:40px;border-radius:50%;">
 								}
-								<p class="mb-0 ml-2">@(!Model.IsAnonymous && !string.IsNullOrEmpty(post.UserName) ? post.UserName : "Anonym")</p>
+								<p class="mb-0 ml-2 user-name">@(!Model.IsAnonymous && !string.IsNullOrEmpty(post.UserName) ? post.UserName : "Anonym")</p>
 							</div>
 							<p class="mb-0">@post.Date</p>
 						</div>
@@ -241,25 +325,25 @@
 								<input type="hidden" name="postId" value="@post.Id" />
 								<button type="submit" class="btn btn-primary" asp-page-handler="ToggleLike">Like/Unlike Post</button>
 							</form>
-							<p>Likes: @post.Likes</p>
+							<p class="likes-count">Likes: @post.Likes</p>
 							<div class="accordion" id="CommentAccordion">
 								<div class="card">
 									<div class="card-header" id="Commenta">
 										<button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#CommentCollapse" aria-expanded="true" aria-controls="CommentCollapse">
-											Kommentera
+											Comment
 										</button>
 									</div>
 									<div id="CommentCollapse" class="collapse" aria-labelledby="Posta" data-bs-parent="#CommentAccordion">
 										<form method="post" asp-page-handler="PostComment">
 											<input type="hidden" name="PostId" value="@post.Id" />
 											<input type="text" name="Text" placeholder="Your comment" required />
-											<button type="submit">Post Comment</button>
+											<button type="submit" class="post-comment">Post Comment</button>
 										</form>
 
 
 										@if (post.Comments != null)
 										{
-											<h6>Comments:</h6>
+											<h6 class="comments-color">Comments:</h6>
 											@foreach (var comment in post.Comments)
 											{
 												<div class="comment d-flex align-items-start">
@@ -299,16 +383,16 @@
 												<form method="post" asp-page-handler="ReportPost">
 													<input type="hidden" name="postId" value="@post.Id" />
 													<div class="form-group">
-														<label for="category">Category:</label>
+														<label for="category" class="choose-section">Choose a section:</label>
 														<select name="category" id="category" class="form-control">
-															<option value="Spam">Spam</option>
-															<option value="Inappropriate Content">Inappropriate Content</option>
-															<option value="Harassment">Harassment</option>
-															<option value="Other">Other</option>
+															<option value="Spam" class="spam-color">Spam</option>
+															<option value="Offensive Content" class="offensive-content">Offensive Content</option>
+															<option value="Abuse" class="abuse-color">Abuse</option>
+															<option value="Other" class="other-color ">Other</option>
 														</select>
 													</div>
 													<div class="form-group">
-														<label for="reason">Reason:</label>
+														<label for="reason" class="reason-color">Reason:</label>
 														<textarea name="reason" id="reason" class="form-control"></textarea>
 													</div>
 													<button type="submit" class="btn btn-primary">Report Post</button>

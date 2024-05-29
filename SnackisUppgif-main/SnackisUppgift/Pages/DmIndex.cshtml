@@ -2,27 +2,33 @@
 @model SnackisUppgift.Pages.DmIndexModel
 <style>
     body {
-        background-image: url('/Backgroundimages/wp2668083.png');
+        background-image: url('/Backgroundimages/best-background-for-website-14.png');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
     }
 
-    .blurry-background::before {
-        content: "";
-        display: block;
-        position: fixed;
-        z-index: -1;
-        width: 100%;
-        height: 100%;
-        background: inherit;
-        filter: blur(5px);
-        transform: scale(1.1);
+    .btn-primary {
+        background-color: red;
+        border-color: red;
+        color: white;
     }
+
+    .btn-link {
+        background-color: red;
+        border-color: red;
+        color: black;
+    }
+
+    .your-messages {
+        color: red;
+    }
+
+    
 </style>
 <body class="blurry-background">
     <div class="container">
-        <h1 class="mt-5 mb-4">Your Messages</h1>
+        <h1 class="mt-5 mb-4 your-messages">Your Messages</h1>
 
         @if (Model.DirectMessages != null)
         {
@@ -60,7 +66,7 @@
                     <div class="card-body">
                         <form method="post" asp-page-handler="SendDM">
                             <div class="form-group">
-                                <label for="receiverEmail">Email of the person you want to message</label>
+                                <label for="receiverEmail">Recipient's Email</label>
                                 <input type="email" id="receiverEmail" name="receiverEmail" class="form-control">
                             </div>
                             <div class="form-group">

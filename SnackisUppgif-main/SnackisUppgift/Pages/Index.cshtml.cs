@@ -178,27 +178,32 @@ namespace SnackisUppgift.Pages
 			return RedirectToPage("./Index");
 		}
 
-		public async Task<IActionResult> OnPostDeleteAsync(int deleteId)
-		{
-			var post = await _context.Post.FindAsync(deleteId);
-			if (post == null)
-			{
-				return NotFound();
-			}
+        public async Task<IActionResult> OnPostDeleteAsync(int deleteId)
+        {
+            var post = await _context.Post.FindAsync(deleteId);
+            if (post == null)
+            {
+                return NotFound();
+            }
 
-			// Delete associated comments first
-			var comments = _context.Comments.Where(c => c.PostId == deleteId).ToList();
-			_context.Comments.RemoveRange(comments);
+            // Delete associated comments first
+            var comments = _context.Comments.Where(c => c.PostId == deleteId).ToList();
+            _context.Comments.RemoveRange(comments);
 
-			_context.Post.Remove(post);
-			await _context.SaveChangesAsync();
+            // Delete associated post reports
+            var postReports = _context.PostReport.Where(pr => pr.PostId == deleteId).ToList();
+            _context.PostReport.RemoveRange(postReports);
 
-			return RedirectToPage("./Index");
-		}
+            // Delete the post
+            _context.Post.Remove(post);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
+        }
 
 
 
-		public async Task<IActionResult> OnPostPostCommentAsync(int postId, string text)
+        public async Task<IActionResult> OnPostPostCommentAsync(int postId, string text)
         {
             var user = await _userManager.GetUserAsync(User);
             var post = await _context.Post.FindAsync(postId);

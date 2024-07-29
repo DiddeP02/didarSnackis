@@ -8,9 +8,13 @@
     
 
     .create-button {
-        background-color: black;
-        border-color: black;
-        color: white;
+        background-color: red;
+        border-color: red;
+        color: black;
+    }
+
+    .back-to-list {
+        color: red;
     }
 </style>
 
@@ -35,7 +39,7 @@
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="Index" class="back-to-list">Back to List</a>
 </div>
 
 @section Scripts {

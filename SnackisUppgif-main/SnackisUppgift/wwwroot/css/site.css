@@ -55,3 +55,87 @@ a {
 .user-name {
     color: red;
 }
+
+.admin-color {
+    color: red;
+}
+
+.existing-roles {
+    color: red;
+}
+
+.role-name {
+    color: red;
+}
+
+.remove-role {
+    color: red;
+}
+
+.alert-danger {
+    color: red;
+}
+
+.alert-success {
+    background-color: red;
+    color: red;
+}
+
+.role-color {
+    color: red;
+}
+
+.table-color {
+    color: red;
+}
+
+.role-new{
+    color: red;
+}
+
+.text-color {
+    color: red;
+}
+
+.new-color {
+    color: red;
+}
+
+.index-color {
+    color: red;
+}
+
+.add-new-color {
+    color: red;
+}
+
+.add-link {
+    color: red;
+}
+
+.edit-link {
+    color: red;
+}
+
+.btn danger {
+    background-color: red;
+    border-color: red;  
+    color: red;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background-image: url('images.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Change the color of the "Edit" link */
+.edit-link {
+    color: red; /* Choose your desired color */
+}

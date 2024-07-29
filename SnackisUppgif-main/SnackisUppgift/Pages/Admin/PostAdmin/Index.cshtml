@@ -5,22 +5,15 @@
     ViewData["Title"] = "Index";
 }
 
-<style>
-    .body {
-        background-image: url('/Backgroundimages/best-background-for-website-14.png');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-    }
-</style>
-<h1>Index</h1>
+
+<h1>Directory</h1>
 
 <p>
-    <a asp-page="Create">Add New</a>
+    <a asp-page="Create" class=" add-link">Add New</a>
 </p>
 <table class="table">
     <thead>
-        <tr>
+        <tr class="new-color">
 @*            <th>
                 @Html.DisplayNameFor(model => model.Post[0].Likes)
             </th>*@
@@ -53,7 +46,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model.Post) {
-        <tr>
+        <tr class=" text-color">
 @*            <td>
                 @Html.DisplayFor(modelItem => item.Likes)
             </td>*@
@@ -84,7 +77,7 @@
                 </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+               @*  <a asp-page="./Details" asp-route-id="@item.Id">Details</a> | *@
                 <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>

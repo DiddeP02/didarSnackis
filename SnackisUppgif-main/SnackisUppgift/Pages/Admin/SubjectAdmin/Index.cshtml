@@ -5,16 +5,11 @@
     ViewData["Title"] = "Index";
 }
 
-<style>
-    .body {
-        background-image: url('/Backgroundimages/best-background-for-website-14.png');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-    }
-</style>
+<head>
+    <link rel="stylesheet" type="text/css" href="/path/to/styles.css">
+</head>
 
-<h1>Index</h1>
+<h1>Directory</h1>
 
 <p>
     <a asp-page="Create">Add New</a>
@@ -35,7 +30,7 @@
                 @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Edit" asp-route-id="@item.Id" class="edit-link">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>

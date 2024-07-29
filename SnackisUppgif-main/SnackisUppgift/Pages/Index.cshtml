@@ -6,16 +6,16 @@
 
 <style>
 	body {
-		background-image: url('/Backgroundimages/best-background-for-website-14.png');
+		background-image: url('images.png');
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: center;
 	}
 
 	.btn-success {
-		background-color: red;
-		boder-color: red;
-		color: black;
+		background-color: black;
+		boder-color: black;
+		color: red;
 	}
 
 	.btn-link {
@@ -23,9 +23,9 @@
 	}
 
 	.btn-primary {
-		background-color: red;
-		border-color: red;
-		color: black;
+		background-color: black;
+		border-color: black;
+		color: red;
 	}
 
 	.list-group-item {
@@ -114,9 +114,9 @@
 	}
 
 	.list-group-item {
-		background-color: red;
-		border-color: red;
-		color: black;
+		background-color: transparent;
+		border-color: transparent;
+		color: red;
 	}
 
 	.card-title {
@@ -161,9 +161,9 @@
 	}
 
 	.post-comment {
-		background-color: red;
-		border-color: red;
-		color: black;
+		background-color: black;
+		border-color: black;
+		color: red;
 	}
 
 	.form-label {
@@ -175,10 +175,14 @@
 	}
 
 	.form-control {
-		background-color: red;
-		border-color: red;
-		color: black;
+		background-color: black;
+		border-color: black;
+		color: red;
 	}
+
+	
+
+	
 </style>
 
 <body class="blurry-background">
@@ -269,7 +273,7 @@
 				<div class="list-group">
 					@foreach (var subject in Model.Subjects)
 					{
-						<a asp-route-subjectId="@subject.Id" class="list-group-item list-group-item-action">
+						<a asp-route-subjectId="@subject.Id" class="list-group-item list-group-item-action custom-text-color">
 							@subject.Category
 						</a>
 					}
